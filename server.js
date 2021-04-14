@@ -238,6 +238,25 @@ app.put('/forgot_password/:encrypted_mail',async(req,res)=>{
         )
     }
 })
+app.get('/verify_token&get_user_details',async(req,res)=>{
+    try{
+        let access_token=req.headers.authorization;
+        let decoded=await jwt.verify(access_token,process.env.KEY);
+        res.status(200).json(
+            {
+                data:decoded
+            }
+        )
+
+    }
+    catch(err)
+    {
+        res.status(500).json({
+            message:err.message
+        })
+    }
+
+})
 app.post('/add/blog',async(req,res)=>{
     try{
         let access_token=req.headers.authorization;
