@@ -14,7 +14,7 @@ let like=async(email,post_id)=>{
         const step1=await db.collection(likes_collection).insertOne({
             email,post_id
         });
-        const step2=await db.collection(blogs_collection).updateOne({'post_id':{$eq:new objectId(post_id)}},{$inc:{"likes":1}});
+        const step2=await db.collection(blogs_collection).updateOne({'_id':{$eq:new objectId(post_id)}},{$inc:{"likes":1}});
         client.close();
     }
     catch(err)
@@ -27,7 +27,7 @@ let dislike=async(email,post_id)=>{
         const client=await mongoClient.connect(db_url);
         const db=await client.db(db_name);
         const step1=await db.collection(likes_collection).deleteOne({$and:[{'email':email},{"post_id":post_id}]});
-        const step2=await db.collection(blogs_collection).updateOne({'post_id':{$eq:new objectId(post_id)}},{$inc:{"likes":-1}});
+        const step2=await db.collection(blogs_collection).updateOne({'_id':{$eq:new objectId(post_id)}},{$inc:{"likes":-1}});
         client.close();
     }
     catch(err){
