@@ -12,7 +12,7 @@ let addBlog=async(title,category,subject,body,date,image_url,email,name)=>{
         const client=await mongoClient.connect(db_url);
         const db=await client.db(db_name);
         const step1=await db.collection(blogs_collection).insertOne({
-            name,title,category,subject,body,date,image_url,likes:0,comments:[]
+            name,title,category,subject,body,date:new Date(date),image_url,likes:0,comments:[]
         });
         let blog_id=step1.ops[0]._id;
         const step2=await db.collection(users_collection).updateOne({"email":email},{$push:{"blogs":blog_id}});
