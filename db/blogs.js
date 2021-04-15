@@ -9,10 +9,17 @@ const objectId=mongodb.ObjectId;
 
 let addBlog=async(title,category,subject,body,date,image_url,email,name)=>{
     try{
+        date=new Date(date);
+        date=date.getTime() 
+        date=new Date(date);
+        date.setHours(date.getHours() + 5); 
+        date.setMinutes(date.getMinutes() + 30);
+        date=new Date(date);
+
         const client=await mongoClient.connect(db_url);
         const db=await client.db(db_name);
         const step1=await db.collection(blogs_collection).insertOne({
-            name,title,category,subject,body,date:new Date(date),image_url,likes:0,comments:[]
+            name,title,category,subject,body,date,image_url,likes:0,comments:[]
         });
         let blog_id=step1.ops[0]._id;
         const step2=await db.collection(users_collection).updateOne({"email":email},{$push:{"blogs":blog_id}});
@@ -41,9 +48,22 @@ let getBlogs=async(offset,filter)=>{
             }
             if(filter.date)
             {
-               console.log(new Date(filter.date.from),new Date(filter.date.to))
+               let from =new Date(filter.date.from);
+               from=from.getTime() 
+               from=new Date(date);
+               from.setHours(from.getHours() + 5); 
+               from.setMinutes(from.getMinutes() + 30);
+               from=new Date(from);
+
+               let to=new Date(filter.date.to);
+               to=to.getTime() 
+               to=new Date(to);
+               to.setHours(to.getHours() + 5); 
+               to.setMinutes(to.getMinutes() + 30);
+               to=new Date(to);
+
                 f.push({
-                    'date':{$gte:new Date(filter.date.from),$lte:new Date(filter.date.to)}
+                    'date':{$gte:from,$lte:to}
                 });
             }
             if(filter.myblogs)
