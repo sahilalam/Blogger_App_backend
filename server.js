@@ -261,6 +261,7 @@ app.post('/add/blog',async(req,res)=>{
     try{
         let access_token=req.headers.authorization;
         let decoded=await jwt.verify(access_token,process.env.KEY);
+        let name=decoded.name;
         let email=decoded.email;
         let title=req.body.title;
         let category=req.body.category;
@@ -268,7 +269,7 @@ app.post('/add/blog',async(req,res)=>{
         let body=req.body.body;
         let date=req.body.date;
         let image_url=req.body.image_url;
-        await addBlog(title,category,subject,body,date,image_url,email);
+        await addBlog(title,category,subject,body,date,image_url,email,name);
         res.status(201).json({
             message:"Blog Added!"
         })
