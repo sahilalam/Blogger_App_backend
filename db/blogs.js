@@ -43,7 +43,7 @@ let getBlogs=async(offset,filter)=>{
             {
                
                 f.push({
-                    'date':{$gte:new Date(filter.date.from)-0,$lte:new Date(filter.date.to)-0}
+                    'date':{$gte:filter.date.from-0,$lte:filter.date.to-0}
                 });
             }
             if(filter.myblogs)
