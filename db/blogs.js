@@ -9,7 +9,7 @@ const objectId=mongodb.ObjectId;
 
 let addBlog=async(title,category,subject,body,date,image_url,email,name)=>{
     try{
-        date=new Date(date)-0;
+        date=new Date(date);
         
 
         const client=await mongoClient.connect(db_url);
@@ -44,9 +44,9 @@ let getBlogs=async(offset,filter)=>{
             }
             if(filter.date)
             {
-               let from =new Date(filter.date.from)-0;
+               let from =new Date(filter.date.from);
               
-               let to=new Date(filter.date.to)-0;
+               let to=new Date(filter.date.to);
               
 
                 f.push({
