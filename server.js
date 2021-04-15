@@ -302,9 +302,10 @@ app.get('/get/blogs/:offset/:category/:from/:to/:myblogs',async(req,res)=>{
         if(from!=0)
         {
             filter.date={
-                from:from
+                from:from,
+                to:req.params.to
             }
-            filter.date.to=req.params.to;
+            
         }
         const data=await getBlogs(offset,filter);
         res.status(200).json(data)
