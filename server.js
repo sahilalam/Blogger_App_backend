@@ -290,7 +290,7 @@ app.get('/get/blogs/:offset/:category/:from/:to/:myblogs',async(req,res)=>{
         let myblogs=+req.params.myblogs;
         if(myblogs)
         {
-            const user=await checkEmail(email);
+            const user=await checkEmail(decoded.email);
             filter.myblogs=user.blogs;
         }
         let category=req.params.category;
