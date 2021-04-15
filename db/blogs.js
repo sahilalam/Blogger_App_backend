@@ -50,7 +50,7 @@ let getBlogs=async(offset,filter)=>{
             {
                let from =new Date(filter.date.from);
                from=from.getTime() 
-               from=new Date(date);
+               from=new Date(from);
                from.setHours(from.getHours() + 5); 
                from.setMinutes(from.getMinutes() + 30);
                from=new Date(from);
