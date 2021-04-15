@@ -281,12 +281,18 @@ app.post('/add/blog',async(req,res)=>{
         })
     }
 });
-app.get('/get/blogs/:offset/:category/:from/:to',async(req,res)=>{
+app.get('/get/blogs/:offset/:category/:from/:to/:myblogs',async(req,res)=>{
     try{
         let access_token=req.headers.authorization;
         let decoded=await jwt.verify(access_token,process.env.KEY);
         let offset=+req.params.offset;
         let filter={};
+        let myblogs=+req.params.myblogs;
+        if(myblogs)
+        {
+            const user=await checkEmail(email);
+            filter.myblogs=user.blogs;
+        }
         let category=req.params.category;
         if(category!=0)
         {

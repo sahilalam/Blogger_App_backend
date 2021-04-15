@@ -46,6 +46,14 @@ let getBlogs=async(offset,filter)=>{
                     'data':{$gte:filter.date.from,$lte:filter.date.to}
                 });
             }
+            if(filter.myblogs)
+            {
+                f.push({
+                    "_id":{
+                        $in:filter.myblogs
+                    }
+                })
+            }
         }
         const data=await db.collection(blogs_collection).find({$and:f}).project({"body":0}).sort({'likes':-1}).skip(offset).limit(n+1).toArray();
         client.close();
