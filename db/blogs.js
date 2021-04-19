@@ -62,7 +62,7 @@ let getBlogs=async(offset,filter)=>{
                 })
             }
         }
-        const data=await db.collection(blogs_collection).find({$and:f}).project({"body":0}).sort({'likes':-1}).skip(offset).limit(n+1).toArray();
+        let data=await db.collection(blogs_collection).find({$and:f}).project({"body":0}).sort({'likes':-1}).skip(offset).limit(n+1).toArray();
         client.close();
         let next=false,prev=false;
         if(data.length>n)
