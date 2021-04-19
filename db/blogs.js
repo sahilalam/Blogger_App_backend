@@ -68,11 +68,14 @@ let getBlogs=async(offset,filter)=>{
         if(data.length>n)
         {
             next=true;
+            data=data.slice(0,data.length-1);
         }
         if(offset>=10)
         {
             prev=true;
         }
+        
+       
         return {
             data,next,prev
         } 
